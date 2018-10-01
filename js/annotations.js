@@ -60,10 +60,10 @@ function updateNotes() {
 	    if(checkRange(timer,note_time[i],note_time[i+1])){
 	        //console.log("True\n");
 	        annotation_id=counter;
-	        document.getElementById("current-time").innerHTML = note_content[annotation_id];
+	        document.getElementById("notes").innerHTML = note_content[annotation_id];
 	    }
 	    else{
-	    	document.getElementById("notes").innerHTML = timer;
+	    	document.getElementById("current-time").innerHTML = timer;
 	    }
 	    annotation_id=counter
 	}
