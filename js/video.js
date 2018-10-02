@@ -18,17 +18,23 @@ video_data_request.onload = function(){
     showVideoList(videos)
 
 }
+
+//Send the AJAX request
 video_data_request.send();
 
+// Run a function everytime the play position changes
 var vid = document.getElementById("video-main");
 vid.ontimeupdate = function() { updateNotes() };
 
+
+// Initiate video player with the first video url
 function setFirstVideo(video_url) {
     var new_video = document.getElementById('video-main');
     new_video.src = video_url;
     new_video.load();
 }
 
+// Change the notes based on video position
 function updateNotes() {
     timer = parseInt(vid.currentTime)
     for(i=0;i<note_time.length-1;i++){
@@ -46,19 +52,25 @@ function updateNotes() {
 	}
 }
 
+// Create lists based on video metadata. Allow the users to swap between videos
 function showVideoList(videos_json){
     list_buffer=""
-    list_buffer+="<li>";
+    list_buffer+="<ul>";
     console.log(videos_json)
     for(i=0;i<videos_json.length;i++){
         console.log(videos_json.name)
+        list_buffer+="<li>";
         list_buffer+="<a href=\"#\" onClick=\"javascript:swapVideo(\'" + videos_json[i].url + "\'\," + i + ")\; return false\;\">" + videos_json[i].name + "</a>";
-        list_buffer+="<li>" + videos_json[i].description + "</li>"
+        list_buffer+="<ul>";
+        list_buffer+="<li>" + videos_json[i].description + "</li>";
+        list_buffer+="</ul>";
+        list_buffer+="</li>";
     }
-    list_buffer+="</li>";
+    list_buffer+="</ul>";
     document.getElementById("video-list").innerHTML = list_buffer
 }
 
+// Change the video
 function swapVideo(videoURL,videoIndex) {
   current_selected_video=videoIndex
   console.log(current_selected_video);
@@ -73,6 +85,7 @@ function swapVideo(videoURL,videoIndex) {
   updateNotes(current_selected_video)
 }
 
+// Checks if an integer is in a certain range
 function checkRange(x,min,max){
     return x >= min && x < max;
 }
