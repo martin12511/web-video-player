@@ -1,56 +1,64 @@
-videos = [{
-            "name": "Beach",
-            "url": "https://storage.googleapis.com/coverr-main/mp4/Candolim-Beach.mp4",
-            "notes": 
-            {
-                "1": "Hello",
-                "4": "This",
-                "5": "Is",
-                "10": "an",
-                "14": "annotation"
-            }
-        },
+// videos = [{
+//             "name": "Beach",
+//             "url": "https://storage.googleapis.com/coverr-main/mp4/Candolim-Beach.mp4",
+//             "notes": 
+//             {
+//                 "1": "Hello",
+//                 "4": "This",
+//                 "5": "Is",
+//                 "10": "an",
+//                 "14": "annotation"
+//             }
+//         },
 
-        {
-            "name": "Donuts",
-            "url": "https://storage.googleapis.com/coverr-main/mp4/Yummmyy.mp4",
-            "notes": 
-            {
-                "2": "This",
-                "3": "Is",
-                "7": "Also",
-                "8": "Some",
-                "10": "annotation!"
-            }
-        },
+//         {
+//             "name": "Donuts",
+//             "url": "https://storage.googleapis.com/coverr-main/mp4/Yummmyy.mp4",
+//             "notes": 
+//             {
+//                 "2": "This",
+//                 "3": "Is",
+//                 "7": "Also",
+//                 "8": "Some",
+//                 "10": "annotation!"
+//             }
+//         },
 
-        {
-            "name": "flowers",
-            "url": "https://staging.coverr.co/s3/mp4/Skate-park.mp4",
-            "notes": 
-            {
-                "2": "This",
-                "3": "Is",
-                "7": "the",
-                "8": "3rd",
-                "10": "annotation..."
-            }
-        }]
+//         {
+//             "name": "flowers",
+//             "url": "https://staging.coverr.co/s3/mp4/Skate-park.mp4",
+//             "notes": 
+//             {
+//                 "2": "This",
+//                 "3": "Is",
+//                 "7": "the",
+//                 "8": "3rd",
+//                 "10": "annotation..."
+//             }
+//         }]
 
+current_selected_video = 0
+var video_data_request = new XMLHttpRequest();
 
-annotation_id=0
-note_time = Object.keys(videos[1].notes)
-note_content = Object.values(videos[1].notes)
+video_data_request.open('GET','data/videos.json');
+video_data_request.onload = function(){
+    video_data=JSON.parse(video_data_request.responseText);
+    videos = video_data;
+    note_time = Object.keys(videos[current_selected_video].notes);
+    note_content = Object.values(videos[current_selected_video].notes);
 
-// var timer=0
+    showVideoList(videos)
 
-// timer++;
+}
+video_data_request.send();
+
+annotation_id=0;
+
 
 
 var vid = document.getElementById("video-main");
+vid.ontimeupdate = function() { updateNotes() };
 
-// Assign an ontimeupdate event to the <video> element, and execute a function if the current playback position has changed
-vid.ontimeupdate = function() {updateNotes()};
 
 function updateNotes() {
     timer = parseInt(vid.currentTime)
@@ -67,6 +75,31 @@ function updateNotes() {
 	    }
 	    annotation_id=counter
 	}
+}
+
+
+function showVideoList(videos_json){
+    list_buffer=""
+    console.log(videos_json)
+    for(i=0;i<videos_json.length;i++){
+        console.log(videos_json.name)
+        list_buffer+="<li><a href=\"#\" onClick=\"javascript:swapVideo(\'" + videos_json[i].url + "\'\," + i + ")\; return false\;\">" + videos_json[i].name + "</a></li>";
+    }
+    document.getElementById("video-list").innerHTML = list_buffer
+}
+
+function swapVideo(videoURL,videoIndex) {
+  current_selected_video=videoIndex
+  console.log(current_selected_video);
+  note_time = Object.keys(videos[current_selected_video].notes);
+  note_content = Object.values(videos[current_selected_video].notes);
+
+  var new_video = document.getElementById('video-main');
+  new_video.src = videoURL;
+  new_video.load();
+  new_video.play();
+
+  updateNotes(current_selected_video)
 }
 
 function checkRange(x,min,max){
