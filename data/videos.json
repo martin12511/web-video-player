@@ -1,6 +1,7 @@
 [{
-            "name": "Beach",
-            "url": "https://storage.googleapis.com/coverr-main/mp4/Candolim-Beach.mp4",
+            "name": "Elephant Dream",
+            "description": "The first Blender Open Movie from 2006",
+            "url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
             "notes": 
             {
                 "1": "aHello",
@@ -12,8 +13,9 @@
         },
 
         {
-            "name": "Donuts",
-            "url": "https://storage.googleapis.com/coverr-main/mp4/Yummmyy.mp4",
+            "name": "Tears of Steel",
+            "description": "Tears of Steel was realized with crowd-funding by users of the open source 3D creation tool",
+            "url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
             "notes": 
             {
                 "2": "bThis",
@@ -25,8 +27,9 @@
         },
 
         {
-            "name": "flowers",
-            "url": "https://staging.coverr.co/s3/mp4/Skate-park.mp4",
+            "name": "Sintel",
+            "description": "Sintel is an independently produced short film, initiated by the Blender Foundation",
+            "url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
             "notes": 
             {
                 "2": "cThis",

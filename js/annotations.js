@@ -37,7 +37,8 @@
 //             }
 //         }]
 
-current_selected_video = 0
+current_selected_video = 0;
+note_id=0;
 var video_data_request = new XMLHttpRequest();
 
 video_data_request.open('GET','data/videos.json');
@@ -47,17 +48,24 @@ video_data_request.onload = function(){
     note_time = Object.keys(videos[current_selected_video].notes);
     note_content = Object.values(videos[current_selected_video].notes);
 
+    setFirstVideo(videos[current_selected_video].url);
+
     showVideoList(videos)
 
 }
 video_data_request.send();
 
-annotation_id=0;
-
 
 
 var vid = document.getElementById("video-main");
 vid.ontimeupdate = function() { updateNotes() };
+
+
+function setFirstVideo(video_url) {
+    var new_video = document.getElementById('video-main');
+    new_video.src = video_url;
+    new_video.load();
+}
 
 
 function updateNotes() {
@@ -67,13 +75,13 @@ function updateNotes() {
 		//console.log(timer + " range: " + note_time[i] + " and " + note_time[i+1])
 	    if(checkRange(timer,note_time[i],note_time[i+1])){
 	        //console.log("True\n");
-	        annotation_id=counter;
-	        document.getElementById("notes").innerHTML = note_content[annotation_id];
+	        note_id=counter;
+	        document.getElementById("notes").innerHTML = note_content[note_id];
 	    }
 	    else{
 	    	document.getElementById("current-time").innerHTML = timer;
 	    }
-	    annotation_id=counter
+	    note_id=counter
 	}
 }
 
